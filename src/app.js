@@ -10,6 +10,7 @@
 
 const mongoose = require("mongoose");
 const xlsx = require("xlsx");
+const { Track, Contract } = require("./models/models")
 
 /**
 * Opens Excel file, splits Aliases by semicolon, and returns array of objects.
@@ -26,7 +27,7 @@ function parseImport(filename) {
     const excelFile = xlsx.readFile(filename);
     let excelParsed = xlsx.utils.sheet_to_json(excelFile["Sheets"][excelFile.SheetNames[0]]).slice(1);
     // Separates alises, by semicolon, for each track
-    return excelParsed.map((i) => { 
+    return excelParsed.map((i) => {
         i["Aliases"] = i["Aliases"].replace(/\s/g, "").split(";"); 
         return i;
     });
@@ -36,6 +37,9 @@ function parseImport(filename) {
 * Main function for the script.
 */
 function main() {
+    console.log(Track);
+    console.log(Contract);
+
     console.log(parseImport("task/Track Import Test.xlsx"));
 };
 
